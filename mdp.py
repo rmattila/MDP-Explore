@@ -1,10 +1,10 @@
 from numpy import random
 
 def number_of_states():
-    return 6
+    return 3
 
 def number_of_controls():
-    return 1
+    return 2
 
 def state_labels():
     return {0:'Broken', 1:'Functional'}
