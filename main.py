@@ -42,11 +42,11 @@ class MDPExplore(wx.Frame):
         # Sizers
         hbox = wx.BoxSizer(wx.HORIZONTAL)
 
-        vboxl = wx.BoxSizer(wx.VERTICAL)
+        self.vboxl = wx.BoxSizer(wx.VERTICAL)
         vboxr = wx.BoxSizer(wx.VERTICAL)
 
         # Create the layout
-        vboxl.Add(self.mdp_image, 1, wx.EXPAND|wx.ALL, 5)
+        self.vboxl.Add(self.mdp_image, 1, wx.EXPAND|wx.ALL, 5)
 
         vboxr.Add(wx.StaticText(self.panel, label='Time:'))
         vboxr.Add(self.sc_time, 0, wx.ALL, 5)
@@ -56,7 +56,7 @@ class MDPExplore(wx.Frame):
 
         vboxr.Add(self.chb_probs, 0, wx.TOP, 10)
 
-        hbox.Add(vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
+        hbox.Add(self.vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
         hbox.Add(vboxr, 0, wx.ALL, 5)
 
         self.panel.SetSizer(hbox)
@@ -107,12 +107,18 @@ class MDPExplore(wx.Frame):
         return mdp
 
     def plotMDPGraph(self, mdp):
+        if self.hasUI:
+            size_x = self.vboxl.GetSize().GetWidth()
+            size_y = self.vboxl.GetSize().GetHeight()
+
+            # TODO: Resize the output graph to fit the window size
+
         filename = mdp.render(filename='img/mdp')
         print "Graph of MDP was rendered to " + filename
 
 def main():
     app = wx.App()
-    MDPExplore(None, title='MDP-Explore 0.1')
+    MDPExplore(None, title='MDP-Explore 0.2')
     app.MainLoop()
 
 if __name__ == '__main__':
