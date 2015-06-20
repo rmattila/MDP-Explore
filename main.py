@@ -40,13 +40,13 @@ class MDPExplore(wx.Frame):
         self.chb_probs.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
 
         # Sizers
-        hbox = wx.BoxSizer(wx.HORIZONTAL)
+        self.hbox = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.vboxl = wx.BoxSizer(wx.VERTICAL)
+        vboxl = wx.BoxSizer(wx.VERTICAL)
         vboxr = wx.BoxSizer(wx.VERTICAL)
 
         # Create the layout
-        self.vboxl.Add(self.mdp_image, 1, wx.EXPAND|wx.ALL, 5)
+        vboxl.Add(self.mdp_image, 1, wx.EXPAND|wx.ALL, 5)
 
         vboxr.Add(wx.StaticText(self.panel, label='Time:'))
         vboxr.Add(self.sc_time, 0, wx.ALL, 5)
@@ -56,16 +56,17 @@ class MDPExplore(wx.Frame):
 
         vboxr.Add(self.chb_probs, 0, wx.TOP, 10)
 
-        hbox.Add(self.vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
-        hbox.Add(vboxr, 0, wx.ALL, 5)
+        self.hbox.Add(vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
+        self.hbox.Add(vboxr, 0, wx.ALL, 5)
 
-        self.panel.SetSizer(hbox)
-        hbox.Fit(self)
+        self.panel.SetSizer(self.hbox)
+        self.hbox.Fit(self)
         self.panel.Layout()
 
     def updateMDPPlot(self, e):
         self.plotMDPGraph(self.generateMDPGraph(int(self.cob_control.GetValue()), self.sc_time.GetValue(), state_labels()))
         self.mdp_image.SetBitmap(wx.Bitmap('./img/mdp.png', wx.BITMAP_TYPE_ANY))
+        self.hbox.Fit(self)
         print "Updated plot"
 
     def generateMDPGraph(self, u, k, labels):
@@ -107,12 +108,6 @@ class MDPExplore(wx.Frame):
         return mdp
 
     def plotMDPGraph(self, mdp):
-        if self.hasUI:
-            size_x = self.vboxl.GetSize().GetWidth()
-            size_y = self.vboxl.GetSize().GetHeight()
-
-            # TODO: Resize the output graph to fit the window size
-
         filename = mdp.render(filename='img/mdp')
         print "Graph of MDP was rendered to " + filename
 
