@@ -26,7 +26,7 @@ class MDPExplore(wx.Frame):
         self.mdp_image = wx.StaticBitmap(self.panel, wx.ID_ANY, wx.Bitmap('./img/mdp.png', wx.BITMAP_TYPE_ANY))
 
         self.sc_time = wx.SpinCtrl(self.panel, value='0')
-        self.sc_time.SetRange(0, 150)
+        self.sc_time.SetRange(0, 10e4)
 
         controls = [str(x) for x in range(0, number_of_controls())]
         self.cob_control = wx.ComboBox(self.panel, choices=controls, style=wx.CB_READONLY)
