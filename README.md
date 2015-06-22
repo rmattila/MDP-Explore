@@ -26,7 +26,7 @@ MDP-Explore requires `graphviz` and `wxPython` to run.
 
 On OSX, these can be installed by running `brew install graphviz`, `pip
 install graphviz` and `brew install wxpython`. If you run into problems with
-linking `libpng`, see the answer by joet3ch in
-[this](http://stackoverflow.com/questions/17756587/installing-graphicsmagick-on-mac-os-x-10-8)
-StackOverflow question.
+linking `libpng`, try running `sudo chown -R $USER:admin
+/usr/local/share/man/man5` (see
+[this](http://thornelabs.net/2014/12/08/libpng-not-symlinking-when-installing-imagemagick-on-os-x-yosemite.html)).
 
