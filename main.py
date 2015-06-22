@@ -105,8 +105,9 @@ class MDPExplore(wx.Frame):
 
                     psum += p
 
-            if psum != 1.0:
+            if abs(psum - 1.0) > 1e-6:
                 print "WARNING: The transition matrix has a row (%i) that does not sum to one!" % i
+                print "         It sums to %f." % psum
 
         return mdp
 
