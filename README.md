@@ -10,7 +10,7 @@ replacement problem is provided as an example in the file.
 
 To run MDP-Explore, type `pythow main.py`. 
 
-The states will be plotted along with the transitions. If `Show probabilities`
+The states will be plotted along with the transitions. If *Show probabilities*
 is enabled, then the transition probabilities will be added as labels to the
 transitions. The thicknesses of the arrows is proportional to the transition
 probabilities. You can choose which action and time that should be used to
