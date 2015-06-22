@@ -16,6 +16,8 @@ transitions. The thicknesses of the arrows is proportional to the transition
 probabilities. You can choose which action and time that should be used to
 evaluate the transition matrix.
 
+The current plot is saved and can be found in `./img/mdp.png`.
+
 ## Screenshot
 ![MDP-Explore Screenshot](https://rmattila.github.io/mdp-explore/mdp-explore.png)
 
