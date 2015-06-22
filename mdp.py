@@ -1,21 +1,28 @@
-# Define an MDP here
+""" Define your MDP here
 
-# The following example is a variant of the standard machine replacement
-# problem, where as the equipment gets older, the availability of knowledgeable
-# service personnel decays and hence the risk of a bad repair increases.
+The following example is a variant of the standard machine replacement
+problem, where, as the equipment gets older, the availability of knowledgeable
+service personnel decays and hence the risk of a bad repair increases.
+"""
 
 from numpy import exp
 from scipy.stats import beta
 
 def number_of_states():
+    """ Return the number of states in the MDP """
     return 4
 
 def number_of_controls():
-    # 0 - Do nothing
-    # 1 - Repair
+    """ Return the number of actions in the MDP 
+
+    In the example, the two control actions are
+        0 - Do nothing
+        1 - Repair
+    """
     return 2
 
 def state_labels():
+    """ Define the state labels for the states in the MDP """
     labels = {}
 
     labels[0] = 'New'
@@ -26,6 +33,15 @@ def state_labels():
     return labels
 
 def TProb(i, j, k, u):
+    """ Define the transition probabilities of the MDP
+
+    The arguments to the functions are
+        i - From state
+        j - To state
+        k - Time
+        u - Action
+    and it should return a real in [0,1].
+    """
     if u == 0:
         # Control: Do nothing
         T = [[0.7, 0.2, 0.05, 0.05],
