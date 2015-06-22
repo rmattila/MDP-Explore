@@ -60,3 +60,4 @@ target/
 img/
 .idea/
 *.swp
+.DS_Store
