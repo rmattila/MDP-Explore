@@ -34,10 +34,14 @@ class MDPExplore(wx.Frame):
         self.chb_probs = wx.CheckBox(self.panel, label='Show probabilities')
         self.chb_probs.SetValue(True)
 
+        self.chb_state_numbers = wx.CheckBox(self.panel, label='Show state numbers')
+        self.chb_state_numbers.SetValue(False)
+
         # Bind events
         self.sc_time.Bind(wx.EVT_SPINCTRL, self.updateMDPPlot)
         self.cob_control.Bind(wx.EVT_COMBOBOX, self.updateMDPPlot)
         self.chb_probs.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
+        self.chb_state_numbers.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
 
         # Sizers
         self.hbox = wx.BoxSizer(wx.HORIZONTAL)
@@ -55,6 +59,7 @@ class MDPExplore(wx.Frame):
         vboxr.Add(self.cob_control, 0, wx.ALL, 5)
 
         vboxr.Add(self.chb_probs, 0, wx.TOP, 10)
+        vboxr.Add(self.chb_state_numbers, 0, wx.TOP, 10)
 
         self.hbox.Add(vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
         self.hbox.Add(vboxr, 0, wx.ALL, 5)
@@ -81,10 +86,10 @@ class MDPExplore(wx.Frame):
         # Create the nodes in the graph
         for i in range(0, number_of_states()):
             if i in labels:
-                if not self.hasUI or self.chb_probs.GetValue():
-                    mdp.node(str(i), str(i) + ':' + labels[i])
-                else:
+                if not self.hasUI or not self.chb_state_numbers.GetValue():
                     mdp.node(str(i), labels[i])
+                else:
+                    mdp.node(str(i), str(i) + ':' + labels[i])
             else:
                 mdp.node(str(i), 'Node %i' % i)
 
