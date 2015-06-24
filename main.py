@@ -118,7 +118,7 @@ class MDPExplore(wx.Frame):
 
     def plotMDPGraph(self, mdp):
         """ Render graphviz graph of the MDP to file """
-        filename = mdp.render(filename='img/mdp')
+        mdp.render(filename='img/mdp')
 
     def updateMDPPlot(self, e):
         """ Update the plot of the MDP
