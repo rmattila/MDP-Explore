@@ -45,6 +45,9 @@ class MDPExplore(wx.Frame):
         self.chb_state_numbers = wx.CheckBox(self.panel, label='Show state numbers')
         self.chb_state_numbers.SetValue(False)
 
+        self.chb_use_percentage = wx.CheckBox(self.panel, label='Use %')
+        self.chb_use_percentage.SetValue(False)
+
         self.chb_save_pdf = wx.CheckBox(self.panel, label='Save to pdf')
         self.chb_save_pdf.SetValue(False)
 
@@ -54,6 +57,7 @@ class MDPExplore(wx.Frame):
         self.chb_probs.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
         self.chb_state_numbers.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
         self.chb_save_pdf.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
+        self.chb_use_percentage.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
 
         # Sizers
         self.hbox = wx.BoxSizer(wx.HORIZONTAL)
@@ -72,6 +76,7 @@ class MDPExplore(wx.Frame):
 
         vboxr.Add(self.chb_probs, 0, wx.TOP, 10)
         vboxr.Add(self.chb_state_numbers, 0, wx.TOP, 10)
+        vboxr.Add(self.chb_use_percentage, 0, wx.TOP, 10)
         vboxr.Add(self.chb_save_pdf, 0, wx.TOP, 10)
 
         self.hbox.Add(vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
@@ -108,10 +113,16 @@ class MDPExplore(wx.Frame):
                 p = TProb(i, j, k, u)
 
                 if TProb(i, j, k, u) > 0:
-                    if not self.hasUI or self.chb_probs.GetValue():
+                    if not self.hasUI:
                         mdp.edge(str(i), str(j), '%.2f' % p, {'penwidth':str(line_width * p)})
                     else:
-                        mdp.edge(str(i), str(j), None, {'penwidth':str(line_width * p)})
+                        if self.chb_probs.GetValue():
+                            if self.chb_use_percentage.GetValue():
+                                mdp.edge(str(i), str(j), '%.1f%%' % (100.0 * p), {'penwidth':str(line_width * p)})
+                            else:
+                                mdp.edge(str(i), str(j), '%.2f' % p, {'penwidth':str(line_width * p)})
+                        else:
+                            mdp.edge(str(i), str(j), None, {'penwidth':str(line_width * p)})
 
                     psum += p
 
@@ -143,7 +154,7 @@ class MDPExplore(wx.Frame):
 def main():
     """ Run the application """
     app = wx.App()
-    MDPExplore(None, title='MDP-Explore 0.2')
+    MDPExplore(None, title='MDP-Explore 0.3')
     app.MainLoop()
 
 if __name__ == '__main__':
