@@ -19,8 +19,8 @@ evaluate the transition matrix.
 The current plot is saved and can be found in the `img/` folder.
 
 ## Screenshot
-![MDP-Explore Screenshot](https://rmattila.github.io/mdp-explore/mdp-explore.png)
-![MDP-Explore Screenshot](https://rmattila.github.io/mdp-explore/mdp-explore2.png)
+![MDP-Explore Screenshot](https://rmattila.github.io/img/mdp-explore.png)
+![MDP-Explore Screenshot](https://rmattila.github.io/img/mdp-explore2.png)
 
 ## Dependencies
 MDP-Explore requires `graphviz` and `wxPython` to run.
