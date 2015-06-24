@@ -1,3 +1,9 @@
+""" MDP-Explore
+
+This is a tool for graphically illustrating the (possibly time-dependent)
+Markov chain underlying a Markov Decision Process (MDP).
+"""
+
 import graphviz as gv
 import wx
 
@@ -5,6 +11,7 @@ import wx
 from mdp import *
 
 class MDPExplore(wx.Frame):
+    """ MDP-Explore application """
 
     def __init__(self, parent, title):
         super(MDPExplore, self).__init__(parent, title=title,size=(400, 300))
@@ -20,6 +27,7 @@ class MDPExplore(wx.Frame):
         self.Show()
 
     def initUI(self):
+        """ Build the UI """
         self.panel = wx.Panel(self)
 
         # Components
@@ -68,13 +76,8 @@ class MDPExplore(wx.Frame):
         self.hbox.Fit(self)
         self.panel.Layout()
 
-    def updateMDPPlot(self, e):
-        self.plotMDPGraph(self.generateMDPGraph(int(self.cob_control.GetValue()), self.sc_time.GetValue(), state_labels()))
-        self.mdp_image.SetBitmap(wx.Bitmap('./img/mdp.png', wx.BITMAP_TYPE_ANY))
-        self.hbox.Fit(self)
-        print "Updated plot"
-
     def generateMDPGraph(self, u, k, labels):
+        """ Construct the (graphviz) graph of the MDP """
         line_width = 5.0
 
         if u > number_of_controls():
@@ -107,16 +110,28 @@ class MDPExplore(wx.Frame):
 
                     psum += p
 
-            if psum != 1.0:
+            if abs(psum - 1.0) > 1e-6:
                 print "WARNING: The transition matrix has a row (%i) that does not sum to one!" % i
+                print "         It sums to %f." % psum
 
         return mdp
 
     def plotMDPGraph(self, mdp):
+        """ Render graphviz graph of the MDP to file """
         filename = mdp.render(filename='img/mdp')
-        print "Graph of MDP was rendered to " + filename
+
+    def updateMDPPlot(self, e):
+        """ Update the plot of the MDP
+        
+        This saves the graphviz graph of the MDP to file and updates the UI
+        container.
+        """
+        self.plotMDPGraph(self.generateMDPGraph(int(self.cob_control.GetValue()), self.sc_time.GetValue(), state_labels()))
+        self.mdp_image.SetBitmap(wx.Bitmap('./img/mdp.png', wx.BITMAP_TYPE_ANY))
+        self.hbox.Fit(self)
 
 def main():
+    """ Run the application """
     app = wx.App()
     MDPExplore(None, title='MDP-Explore 0.2')
     app.MainLoop()
