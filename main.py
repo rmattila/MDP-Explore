@@ -45,11 +45,15 @@ class MDPExplore(wx.Frame):
         self.chb_state_numbers = wx.CheckBox(self.panel, label='Show state numbers')
         self.chb_state_numbers.SetValue(False)
 
+        self.chb_save_pdf = wx.CheckBox(self.panel, label='Save to pdf')
+        self.chb_save_pdf.SetValue(False)
+
         # Bind events
         self.sc_time.Bind(wx.EVT_SPINCTRL, self.updateMDPPlot)
         self.cob_control.Bind(wx.EVT_COMBOBOX, self.updateMDPPlot)
         self.chb_probs.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
         self.chb_state_numbers.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
+        self.chb_save_pdf.Bind(wx.EVT_CHECKBOX, self.updateMDPPlot)
 
         # Sizers
         self.hbox = wx.BoxSizer(wx.HORIZONTAL)
@@ -68,6 +72,7 @@ class MDPExplore(wx.Frame):
 
         vboxr.Add(self.chb_probs, 0, wx.TOP, 10)
         vboxr.Add(self.chb_state_numbers, 0, wx.TOP, 10)
+        vboxr.Add(self.chb_save_pdf, 0, wx.TOP, 10)
 
         self.hbox.Add(vboxl, 1, wx.EXPAND|wx.TOP|wx.BOTTOM|wx.LEFT, 5)
         self.hbox.Add(vboxr, 0, wx.ALL, 5)
@@ -119,6 +124,11 @@ class MDPExplore(wx.Frame):
     def plotMDPGraph(self, mdp):
         """ Render graphviz graph of the MDP to file """
         mdp.render(filename='img/mdp')
+
+        if self.hasUI and self.chb_save_pdf.GetValue():
+            mdp.format = 'pdf'
+            mdp.render(filename='img/mdp')
+            mdp.format = 'png'
 
     def updateMDPPlot(self, e):
         """ Update the plot of the MDP
