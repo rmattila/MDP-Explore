@@ -8,7 +8,7 @@ First define the transition probabilities of the MDP in `mdp.py` along with the
 number of actions and the state labels. A variant of the standard machine
 replacement problem is provided as an example in the file.
 
-To run MDP-Explore, type `pythow main.py`. 
+To run MDP-Explore, type `pythonw main.py`. 
 
 The states will be plotted along with the transitions. If *Show probabilities*
 is enabled, then the transition probabilities will be added as labels to the
